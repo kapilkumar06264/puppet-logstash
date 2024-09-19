@@ -39,7 +39,7 @@ class logstash::service {
   File {
     owner  => 'root',
     group  => 'root',
-    mode   => '0644',
+    mode   => $logstash::startup_options_mode,
     notify => Exec['logstash-system-install'],
   }
 

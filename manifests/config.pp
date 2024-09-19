@@ -21,14 +21,14 @@ class logstash::config {
   if($logstash::ensure == 'present') {
     file { $logstash::config_dir:
       ensure => directory,
-      mode   => '0755',
+      mode   => $logstash::config_dir_mode,
     }
 
     file { "${logstash::config_dir}/conf.d":
       ensure  => directory,
       purge   => $logstash::purge_config,
       recurse => $logstash::purge_config,
-      mode    => '0775',
+      mode    => $logstash::conf_d_mode,
       notify  => Service['logstash'],
     }
 
@@ -36,7 +36,7 @@ class logstash::config {
       ensure  => directory,
       purge   => $logstash::purge_config,
       recurse => $logstash::purge_config,
-      mode    => '0755',
+      mode    => $logstash::patterns_dir_mode,
     }
   }
   elsif($logstash::ensure == 'absent') {

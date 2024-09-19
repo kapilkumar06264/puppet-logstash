@@ -89,6 +89,17 @@
 # @param [String] config_dir
 #   Path containing the Logstash configuration.
 #
+# @param config_dir_mode The file mode (permissions) for the main configuration directory.
+#   Defaults to '0750'.
+#
+# @param conf_d_mode The file mode (permissions) for the `conf.d` directory within the configuration directory.
+#   Defaults to '0770'.
+#
+# @param patterns_dir_mode The file mode (permissions) for the `patterns` directory within the configuration directory.
+#   Defaults to '0750'.
+#
+# @param startup_options_mode The file mode (permissions) for the startup options file.
+#   Defaults to '0640'.
 # @example Install Logstash, ensure the service is running and enabled.
 #   class { 'logstash': }
 #
@@ -171,6 +182,10 @@ class logstash (
   $jvm_options       = [],
   Array $pipelines   = [],
   Boolean $manage_repo   = true,
+  Stdlib::Filemode $config_dir_mode   = '0750',
+  Stdlib::Filemode $conf_d_mode       = '0770',
+  Stdlib::Filemode $patterns_dir_mode = '0750',
+  Stdlib::Filemode $startup_options_mode = '0640',
 ) {
   if ! ($ensure in ['present', 'absent']) {
     fail("\"${ensure}\" is not a valid ensure parameter value")
